@@ -1,4 +1,8 @@
-#!
+#!/bin/sh
+
+ wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh --disable-telemetry --disable-cloud
+sudo /etc/netdata/edit-config netdata.conf
+sudo systemctl restart netdata
 
 # helium browser
 curl -fsSL https://raw.githubusercontent.com/imputnet/helium-linux/main/pubkey.asc | sudo gpg --dearmor -o /usr/share/keyrings/helium.gpg
