@@ -1,0 +1,14 @@
+sudo apt update
+
+sudo apt install gdm3 && sudo systemctl enable gdm3 && sudo systemctl start gdm3 
+
+sudo systemctl get-default 
+
+Se aparecer multi-user.target, significa que o sistema está iniciando em modo texto.
+
+sudo systemctl set-default graphical.target
+
+
+logs 
+sudo journalctl -xe | grep gdm
+

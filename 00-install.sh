@@ -2,6 +2,7 @@
 # sudo dpkg --configure -a && sudo rm -rf ~/var/cache/apt/ && rm -rf ~/.cache/*
 
 sudo echo "%jario ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 sudo apt install -y network-manager-gnome
 
 wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh --disable-telemetry --disable-cloud
