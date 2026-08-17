@@ -3,8 +3,14 @@
 
 sudo echo "%jario ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-sudo apt install -y network-manager-gnome
+# yt-dlp
+mkdir -p ~/.local/bin
+curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ~/.local/bin/yt-dlp
+chmod a+rx ~/.local/bin/yt-dlp
+export PATH="$HOME/.local/bin:$PATH"
+source ~/.bashrc
 
+# netdata
 wget -O /tmp/netdata-kickstart.sh https://get.netdata.cloud/kickstart.sh && sh /tmp/netdata-kickstart.sh --disable-telemetry --disable-cloud
 sudo /etc/netdata/edit-config netdata.conf
 sudo systemctl restart netdata
@@ -21,11 +27,6 @@ sudo apt update && sudo apt install helium-bin
 # brave browser
 curl -fsS https://dl.brave.com/install.sh | sh
 
-# sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-# sudo curl -fsSLo /etc/apt/sources.list.d/brave-browser-release.sources https://brave-browser-apt-release.s3.brave.com/brave-browser.sources
-# sudo apt update
-# sudo apt install brave-browser
-
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg &&  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null && sudo apt update && sudo apt install gh -y
 
 curl -o webmin-setup-repos.sh https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repos.sh
@@ -34,28 +35,47 @@ sudo apt install --install-recommends webmin -y
 
 curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
-sudo apt purge gnome-games --autoremove
-sudo apt purge aisleriot five-or-more four-in-a-row gnome-2048 gnome-chess gnome-clocks gnome-klotski gnome-mahjongg gnome-maps gnome-mines gnome-nibbles gnome-robots gnome-sudoku gnome-taquin gnome-tetravex gnome-todo gnome-weather hitori iagno lightsoff quadrapassel simple-scan swell-foop tali transmission-gtk baobab totem yelp gnome-text-editor -y
-
 sudo apt install curl wget aptitude synaptic -y;
 sudo apt install apt-transport-https -y;
 sudo apt install -y build-essential -y; 
 sudo apt install -y libpam0g-dev libxcb-xkb-dev -y;
-sudo apt install aptitude uget qbittorrent -y;
+sudo apt install uget qbittorrent -y;
 sudo apt install arc arj cabextract lhasa p7zip p7zip-full p7zip-rar rar unrar unace unzip xz-utils zip -y;
 sudo apt install timeshift -y;
-sudo apt install gnome-tweaks -y;
-sudo apt install gnome-shell-extension-dashtodock -y
-sudo apt install chrome-gnome-shell -y
-sudo apt install tlp tlp-rdw -y
-sudo systemctl enable tlp && sudo tlp start
-sudo  apt install audacity -y
-sudo apt install vlc handbrake -y &&
+sudo apt install tlp tlp-rdw -y && sudo systemctl enable tlp && sudo tlp start
+
+sudo apt install vlc handbrake audacity ffmpeg atomicparsley rhash sox aria2  -y
 sudo apt install laptop-mode-tools flashrom  -y
 
-sudo apt install apache2 apache2-utils apache2-suexec-pristine apache2-suexec-custom  ca-certificates apache2-suexec-pristine apache2-suexec-custom -y;  -y;
-sudo install -m 0755 -d /etc/apt/keyrings;
-sudo apt install php php-cli php-common php-json php-mysql php-mbstring php-zip php-fpm php-intl php-soap php-gd libapache2-mod-php php-mbstring php-curl php-zip php-json php-xml -y;
+# WLS ou edite
+
+mkdir -p ~/.config/yt-dlp &&
+cat <<'EOF' > ~/.config/yt-dlp/config
+# Extrair áudio em MP3
+-x
+--audio-format mp3
+
+# Inserir metadados (título, artista, álbum)
+--add-metadata
+
+# Baixar miniatura e usar como capa
+--embed-thumbnail
+
+# Salvar direto no diretório de música
+-o /mnt/d/media/mp3/%(title)s.%(ext)s
+EOF
+
+cat <<'EOF' > ~/.ssh/config
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_jario_ed25519
+  AddKeysToAgent yes
+EOF
+
+# sudo apt install apache2 apache2-utils apache2-suexec-pristine apache2-suexec-custom  ca-certificates apache2-suexec-pristine apache2-suexec-custom -y;  -y;
+
+# sudo apt install php php-cli php-common php-json php-mysql php-mbstring php-zip php-fpm php-intl php-soap php-gd libapache2-mod-php php-mbstring php-curl php-zip php-json php-xml -y;
 
 sudo apt install ufw gufw -y;
 sudo ufw enable &&
