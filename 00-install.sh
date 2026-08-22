@@ -35,7 +35,7 @@ sudo apt install --install-recommends webmin -y
 
 curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
-sudo apt install curl wget aptitude synaptic -y;
+sudo apt install curl wget httrack aptitude synaptic -y;
 sudo apt install apt-transport-https -y;
 sudo apt install -y build-essential -y; 
 sudo apt install -y libpam0g-dev libxcb-xkb-dev -y;
